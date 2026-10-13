@@ -1,0 +1,6 @@
+(function(){var t=document.getElementById('toast'),h;
+function show(m){t.textContent=m;t.classList.add('show');clearTimeout(h);h=setTimeout(function(){t.classList.remove('show')},1600)}
+function fallback(s){var a=document.createElement('textarea');a.value=s;a.setAttribute('readonly','');a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}document.body.removeChild(a);return ok}
+document.addEventListener('click',function(e){var b=e.target.closest('.copy');if(!b)return;var s=b.getAttribute('data-copy');
+var done=function(){var o=b.textContent;b.classList.add('done');b.textContent='복사됨';show('복사했어요 — Gemini에 붙여넣기 하세요');setTimeout(function(){b.classList.remove('done');b.textContent=o},1500)};
+if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(s).then(done,function(){fallback(s)?done():show('복사 실패 — 상자 안 글을 직접 선택해 주세요')})}else{fallback(s)?done():show('복사 실패 — 상자 안 글을 직접 선택해 주세요')}});})();
